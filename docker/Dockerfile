@@ -15,16 +15,16 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libonig-dev \
-    libzip-dev  # <--- Adicione esta linha para instalar a biblioteca libzip
+    libzip-dev
 
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd
-RUN pecl install redis && docker-php-ext-enable redis
-RUN apt-get install -y libpq-dev && docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install mbstring zip exif pcntl
+RUN docker-php-ext-install sockets
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY . /var/www
 
 RUN chown -R www-data:www-data /var/www
 
+EXPOSE 9000
+CMD ["php-fpm"]
