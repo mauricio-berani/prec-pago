@@ -11,20 +11,16 @@ class TransactionController extends Controller
 {
     public function __construct(
         protected TransactionService $service
-    ) {}
+    ) {
+    }
 
     public function create(TransactionRequest $request): Response
     {
         $data = $request->validated();
         $response = $this->service->create($data['amount'], $data['timestamp']);
 
-        if ($response === TransactionStatus::EXPIRED->value) {
-            return $this->handleNoContentResponse();
-        }
-
-        if ($response === TransactionStatus::ERROR->value) {
+        if ($response === TransactionStatus::ERROR->value)
             return $this->handleInternalserverErrorResponse();
-        }
 
         return $this->handleCreatedResponse();
     }
