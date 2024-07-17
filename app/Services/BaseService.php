@@ -9,13 +9,10 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class BaseService
 {
-    protected $connection;
-
-    protected $channel;
-
-    protected $ttl;
-
-    protected $queueName;
+    public $connection;
+    public $channel;
+    public $ttl;
+    public $queueName;
 
     public function __construct()
     {
